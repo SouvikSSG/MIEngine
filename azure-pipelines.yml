@@ -23,6 +23,7 @@ jobs:
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Release'
+      restoreNugetPackages: true
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'xUnit'
@@ -37,6 +38,7 @@ jobs:
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Desktop.Debug'
+      restoreNugetPackages: true
 
 
 - job: DesktopRelease
@@ -46,6 +48,7 @@ jobs:
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Desktop.Release'
+      restoreNugetPackages: true
 
 - job: LabRelease
   pool: 'Hosted Windows 2019 with VS2019'
@@ -56,6 +59,7 @@ jobs:
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Lab.Release'
+      restoreNugetPackages: true
 
 - job: LabDebug
   pool: 'Hosted Windows 2019 with VS2019'
@@ -66,3 +70,4 @@ jobs:
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Lab.Debug'
+      restoreNugetPackages: true
