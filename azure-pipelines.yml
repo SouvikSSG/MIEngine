@@ -7,7 +7,7 @@ jobs:
   steps:
   - task: MSBuild@1
     inputs:
-      solution: 'BuildAndTest.proj'
+      solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Debug'
   - task: PublishTestResults@2
     inputs:
@@ -21,7 +21,7 @@ jobs:
   steps:
   - task: MSBuild@1
     inputs:
-      solution: 'BuildAndTest.proj'
+      solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Release'
   - task: PublishTestResults@2
     inputs:
@@ -35,7 +35,7 @@ jobs:
   steps:
   - task: MSBuild@1
     inputs:
-      solution: 'BuildAndTest.proj'
+      solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Desktop.Debug'
 
 
@@ -44,7 +44,7 @@ jobs:
   steps:
   - task: MSBuild@1
     inputs:
-      solution: 'BuildAndTest.proj'
+      solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Desktop.Release'
 
 - job: LabRelease
@@ -54,7 +54,7 @@ jobs:
   steps:
   - task: MSBuild@1
     inputs:
-      solution: 'BuildAndTest.proj'
+      solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Lab.Release'
 
 - job: LabDebug
@@ -64,5 +64,5 @@ jobs:
   steps:
   - task: MSBuild@1
     inputs:
-      solution: 'BuildAndTest.proj'
+      solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Lab.Debug'
