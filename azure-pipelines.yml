@@ -5,6 +5,11 @@ jobs:
 - job: Debug
   pool: 'Hosted Windows 2019 with VS2019'
   steps:
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      feedsToUse: 'config'
+      nugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
   - task: MSBuild@1
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
@@ -19,11 +24,15 @@ jobs:
 - job: Release
   pool: 'Hosted Windows 2019 with VS2019'
   steps:
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      feedsToUse: 'config'
+      nugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
   - task: MSBuild@1
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Release'
-      restoreNugetPackages: true
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'xUnit'
@@ -34,40 +43,56 @@ jobs:
 - job: DesktopDebug
   pool: 'Hosted Windows 2019 with VS2019'
   steps:
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      feedsToUse: 'config'
+      nugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
   - task: MSBuild@1
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Desktop.Debug'
-      restoreNugetPackages: true
 
 
 - job: DesktopRelease
   pool: 'Hosted Windows 2019 with VS2019'
   steps:
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      feedsToUse: 'config'
+      nugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
   - task: MSBuild@1
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Desktop.Release'
-      restoreNugetPackages: true
 
 - job: LabRelease
   pool: 'Hosted Windows 2019 with VS2019'
   variables:
     TEST_LAB_BUILD: 'true'
   steps:
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      feedsToUse: 'config'
+      nugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
   - task: MSBuild@1
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Lab.Release'
-      restoreNugetPackages: true
 
 - job: LabDebug
   pool: 'Hosted Windows 2019 with VS2019'
   variables:
     TEST_LAB_BUILD: 'true'
   steps:
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      feedsToUse: 'config'
+      nugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
   - task: MSBuild@1
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Lab.Debug'
-      restoreNugetPackages: true
