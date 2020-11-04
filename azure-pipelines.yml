@@ -14,6 +14,12 @@ jobs:
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Debug'
+  - task: VSTest@2
+    inputs:
+      testAssemblyVer2: |
+        $(Build.SourcesDirectory)\bin\Debug\MICoreUnitTests.dll
+        $(Build.SourcesDirectory)\bin\Debug\JDbgUnitTests.dll
+        $(Build.SourcesDirectory)\bin\Debug\SSHDebugTests.dll
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'xUnit'
@@ -33,6 +39,12 @@ jobs:
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Release'
+  - task: VSTest@2
+    inputs:
+      testAssemblyVer2: |
+        $(Build.SourcesDirectory)\bin\Debug\MICoreUnitTests.dll
+        $(Build.SourcesDirectory)\bin\Debug\JDbgUnitTests.dll
+        $(Build.SourcesDirectory)\bin\Debug\SSHDebugTests.dll
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'xUnit'
@@ -52,7 +64,6 @@ jobs:
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Desktop.Debug'
-
 
 - job: DesktopRelease
   pool: 'Hosted Windows 2019 with VS2019'
