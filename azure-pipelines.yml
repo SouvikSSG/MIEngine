@@ -42,9 +42,9 @@ jobs:
   - task: VSTest@2
     inputs:
       testAssemblyVer2: |
-        $(Build.SourcesDirectory)\bin\Debug\MICoreUnitTests.dll
-        $(Build.SourcesDirectory)\bin\Debug\JDbgUnitTests.dll
-        $(Build.SourcesDirectory)\bin\Debug\SSHDebugTests.dll
+        $(Build.SourcesDirectory)\bin\Release\MICoreUnitTests.dll
+        $(Build.SourcesDirectory)\bin\Release\JDbgUnitTests.dll
+        $(Build.SourcesDirectory)\bin\Release\SSHDebugTests.dll
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'xUnit'

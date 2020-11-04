@@ -18,6 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MIDebugPackage", "MIDebugPa
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MICoreUnitTests", "MICoreUnitTests\MICoreUnitTests.csproj", "{6D565BAE-4764-40C3-9C0F-204B6FFA0389}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E659FEE3-7773-4A73-880A-83CE5C9634CC} = {E659FEE3-7773-4A73-880A-83CE5C9634CC}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndroidDebugLauncher", "AndroidDebugLauncher\AndroidDebugLauncher.csproj", "{E0844BFF-2D67-4CB0-8E2A-E9CD888F2EB0}"
 	ProjectSection(ProjectDependencies) = postProject
