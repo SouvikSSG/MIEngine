@@ -66,12 +66,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <GenerateAssembly Include="$(ILDir)liblinux.il">
-      <Visible>false</Visible>
-    </GenerateAssembly>
-    <GenerateAssembly Include="$(ILDir)Microsoft.VisualStudio.Linux.ConnectionManager.Contracts.il">
-      <Visible>false</Visible>
-    </GenerateAssembly>
+    <GenerateAssembly Include="$(ILDir)liblinux.il" />
+    <GenerateAssembly Include="$(ILDir)Microsoft.VisualStudio.Linux.ConnectionManager.Contracts.il" />
   </ItemGroup>
 
   <ItemGroup Label="Project References">

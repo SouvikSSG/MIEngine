@@ -48,9 +48,7 @@
   </PropertyGroup>
 
   <ItemGroup Label="Assembly to Generate">
-    <GenerateAssembly Include="$(ILDir)libadb.il">
-      <Visible>false</Visible>
-    </GenerateAssembly>
+    <GenerateAssembly Include="$(ILDir)libadb.il" />
   </ItemGroup>
 
   <ItemGroup Label="References">

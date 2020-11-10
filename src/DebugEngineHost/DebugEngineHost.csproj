@@ -82,9 +82,7 @@
   </ItemGroup>
 
   <ItemGroup Label="Assembly to Generate">
-    <GenerateAssembly Include="$(ILDir)Microsoft.Internal.VisualStudio.Shell.Interop.14.0.DesignTime.il">
-      <Visible>false</Visible>
-    </GenerateAssembly>
+    <GenerateAssembly Include="$(ILDir)Microsoft.Internal.VisualStudio.Shell.Interop.14.0.DesignTime.il" />
   </ItemGroup>
 
   <ItemGroup Label="References">
