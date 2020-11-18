@@ -1,10 +1,8 @@
 name: $(Date:yyyMMdd).$(Rev:r)
 jobs:
-- job: VS_Code_Release
+- job: VS_Release
   pool:
     name: VSEng-MicroBuildVS2019
-  variables:
-    TEST_LAB_BUILD: 'true' # REMOVE when we use 'real' sign
   steps:
   - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@2
     displayName: 'Install Signing Plugin'
@@ -29,12 +27,12 @@ jobs:
   - task: MSBuild@1
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
-      configuration: 'Desktop.Debug'
+      configuration: 'Debug'
 
   - task: MSBuild@1
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
-      configuration: 'Desktop.Release'
+      configuration: 'Release'
 
   - task: PublishSymbols@1
     displayName: 'Index Sources'

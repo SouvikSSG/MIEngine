@@ -1,0 +1,71 @@
+name: $(Date:yyyMMdd).$(Rev:r)
+jobs:
+- job: VS_Code_Release
+  pool:
+    name: VSEng-MicroBuildVS2019
+  steps:
+  - task: NuGetInstaller@0
+    displayName: 'NuGet restore src/MIDebugEngine.sln'
+    inputs:
+      solution: src/MIDebugEngine.sln
+      nuGetPath: '$(Build.SourcesDirectory)\tools\NuGet\nuget.exe'
+
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      feedsToUse: 'config'
+      nugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
+
+  - task: VSBuild@1
+    displayName: 'Build Solution **\*.sln'
+    inputs:
+      solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
+      msbuildArgs: '/p:Lab=$(Lab) /v:diag'
+      platform: 'Any CPU'
+      configuration: 'Release'
+      clean: true
+
+  - task: PublishSymbols@1
+    displayName: 'Index Sources'
+    inputs:
+      SymbolsPath: '$(DropRoot)\$(TeamName)\$(Build.DefinitionName)\symbols'
+      SearchPattern: '**\bin\**\*.*db'
+      SymbolsFolder: '$(Build.BinariesDirectory)'
+      SkipIndexing: true
+    continueOnError: true
+
+  - task: ms-vseng.MicroBuildShipTasks.0ffdda1d-8c7b-40da-b8b1-061660eaeea3.MicroBuildArchiveSymbols@1
+    displayName: 'Index Symbols on Symweb'
+    inputs:
+      SymbolsFeatureName: MIEngine
+      SymbolsSymwebProject: VS
+      SymbolsUncPath: '$(DropRoot)\$(TeamName)\$(Build.DefinitionName)\symbols'
+      SymbolsEmailContacts: 'waan@microsoft.com'
+    enabled: false # TODO: Enable
+
+  - task: CopyPublishBuildArtifacts@1
+    displayName: 'Publish Drop'
+    inputs:
+      CopyRoot: '$(Build.BinariesDirectory)'
+      Contents: '**'
+      ArtifactName: '$(BuildConfiguration)'
+      ArtifactType: FilePath
+      TargetPath: '$(DropRoot)\$(TeamName)\$(Build.DefinitionName)\$(Build.BuildNumber)'
+
+  - task: ms-vseng.MicroBuildTasks.bd4b789e-7292-4b73-a8ee-612d3dd615f1.MicroBuildStaticDrop@1
+    displayName: 'Update Static Drop'
+    inputs:
+      Contents: '**\bin'
+      TargetPath: '$(DropRoot)\$(TeamName)\$(Build.DefinitionName)\latest'
+
+  - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
+    displayName: 'Perform Cleanup Tasks'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish MicroBuild Outputs'
+    inputs:
+      PathtoPublish: '$(Build.StagingDirectory)\MicroBuild\Output'
+      ArtifactName: MicroBuildOutputs
+      publishLocation: FilePath
+      TargetPath: '$(DropRoot)\$(TeamName)\$(Build.DefinitionName)\$(Build.BuildNumber)'
+
