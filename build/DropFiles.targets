@@ -17,5 +17,11 @@
     <MakeDir Condition="!Exists($(DropDir))" Directories="$(DropDir)" />
     <Copy DestinationFolder="$(DropDir)" SourceFiles="@(DropUnsignedFile);@(DropSignedFile)" />
   </Target>
+
+  <Target Name="SignMyFiles" BeforeTargets="PackBuildOutputs" DependsOnTargets="Build">
+    <!-- Apply the @(FilesToSign) condition check to the task and not the target so that @(SignFilesDependsOn) targets
+         can add to @(FilesToSign) and have that cause this target to run. -->
+    <SignFiles Files="@(FilesToSign)" Type="$(SignType)" ESRPSigning="" UseBearerToken="" Condition=" '@(FilesToSign)' != '' " />
+  </Target>
   
 </Project>
