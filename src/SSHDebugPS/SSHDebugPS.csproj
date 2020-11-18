@@ -62,7 +62,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="$(Newtonsoft_Json_VS_Version)" />
     <PackageReference Include="System.Text.Json" Version="$(System_Text_Json_Version)" />
     <PackageReference Include="System.Memory" Version="$(System_Memory_Version)" />
-    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="$(Microsoft_VisualStudioEng_MicroBuild_Core_Version)" />
+    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="$(Microsoft_VisualStudioEng_MicroBuild_Core_Version)" GeneratePathProperty="true"/>
   </ItemGroup>
 
   <ItemGroup>

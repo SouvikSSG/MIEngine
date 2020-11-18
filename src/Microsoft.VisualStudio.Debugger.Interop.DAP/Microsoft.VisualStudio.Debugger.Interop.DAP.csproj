@@ -56,7 +56,7 @@
 
   <ItemGroup Label="NuGet Packages">
     <PackageReference Include="Microsoft.VisualStudio.Debugger.Interop.Portable" Version="1.0.1" />
-    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="$(Microsoft_VisualStudioEng_MicroBuild_Core_Version)" />
+    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="$(Microsoft_VisualStudioEng_MicroBuild_Core_Version)" GeneratePathProperty="true"/>
   </ItemGroup>
 
   <ItemGroup Label="References">

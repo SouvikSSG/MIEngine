@@ -109,7 +109,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="$(Microsoft_VisualStudio_Utilities_Version)" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="$(Microsoft_VSSDK_BuildTools_Version)" GeneratePathProperty="true"/>
 
-    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="$(Microsoft_VisualStudioEng_MicroBuild_Core_Version)" />
+    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="$(Microsoft_VisualStudioEng_MicroBuild_Core_Version)" GeneratePathProperty="true"/>
   </ItemGroup>
 
   <ItemGroup>
