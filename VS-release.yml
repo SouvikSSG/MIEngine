@@ -1,8 +1,10 @@
 name: $(Date:yyyMMdd).$(Rev:r)
 jobs:
-- job: VS_Release
+- job: VS_Code_Release
   pool:
     name: VSEng-MicroBuildVS2019
+  variables:
+    TEST_LAB_BUILD: 'true' # REMOVE when we use 'real' sign
   steps:
   - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@2
     displayName: 'Install Signing Plugin'
