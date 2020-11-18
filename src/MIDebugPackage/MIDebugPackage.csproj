@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\build\miengine.settings.targets" />
-  <Import Project="$(PkgMicroBuild_Core)\build\MicroBuild.Core.props" Condition="Exists('$(PkgMicroBuild_Core)\build\MicroBuild.Core.props')" />
   <PropertyGroup>
     <!--Visual Studio will prompt to upgrade the project unless $(MinimumVisualStudioVersion)==$(VisualStudioVersion), to make
     VS happy, we will conditionally set MinimumVisualStudioVersion based on what version is opening the project -->
@@ -109,6 +108,8 @@
     <!--NOTE: this reference is here to enable CreatePkgDef.exe to succeed when compiling in VS in a version != the shell targetting version -->
     <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="$(Microsoft_VisualStudio_Utilities_Version)" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="$(Microsoft_VSSDK_BuildTools_Version)" GeneratePathProperty="true"/>
+
+    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="$(Microsoft_VisualStudioEng_MicroBuild_Core_Version)" />
   </ItemGroup>
 
   <ItemGroup>
@@ -325,7 +326,6 @@
     <UseCodebase>true</UseCodebase>
   </PropertyGroup>
   <Import Project="..\..\build\miengine.targets" />
-  <Import Project="$(PkgMicroBuild_Core)\build\MicroBuild.Core.targets" Condition="Exists('$(PkgMicroBuild_Core)\build\MicroBuild.Core.targets')" />
   <!--
   Target to drop the built files into a directory.
   For the official build, we need to drop files to the build share

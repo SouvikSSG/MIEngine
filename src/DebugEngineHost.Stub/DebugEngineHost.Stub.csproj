@@ -5,7 +5,6 @@
     <AssemblyVersion>1.0.0</AssemblyVersion>
   </PropertyGroup>
   <Import Project="..\..\build\miengine.settings.targets" />
-  <Import Project="$(PkgMicroBuild_Core)\build\MicroBuild.Core.props" Condition="Exists('$(PkgMicroBuild_Core)\build\MicroBuild.Core.props')" />
   <PropertyGroup>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -73,6 +72,7 @@
 
   <ItemGroup Label="NuGet Packages">
     <PackageReference Include="Microsoft.VisualStudio.Debugger.Interop.Portable" Version="$(Microsoft_VisualStudio_Debugger_Interop_Portable_Version)" />
+    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="$(Microsoft_VisualStudioEng_MicroBuild_Core_Version)" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -84,7 +84,6 @@
   </ItemGroup>
 
   <Import Project="..\..\build\miengine.targets" />
-  <Import Project="$(PkgMicroBuild_Core)\build\MicroBuild.Core.targets" Condition="Exists('$(PkgMicroBuild_Core)\build\MicroBuild.Core.targets')" />
   <Import Project="..\..\build\DropFiles.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\build\miengine.settings.targets" />
-  <Import Project="$(PkgMicroBuild_Core)\build\MicroBuild.Core.props" Condition="Exists('$(PkgMicroBuild_Core)\build\MicroBuild.Core.props')" />
   <PropertyGroup>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Desktop.Debug</Configuration>
@@ -38,6 +37,7 @@
   </PropertyGroup>
   
   <ItemGroup Label="References">
+    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="$(Microsoft_VisualStudioEng_MicroBuild_Core_Version)" />
     <Reference Include="System" />
     <!-- <Reference Include="Microsoft.CSharp" /> -->
   </ItemGroup>
@@ -54,7 +54,6 @@
   </Target>
 
   <Import Project="..\..\build\miengine.targets" />
-  <Import Project="$(PkgMicroBuild_Core)\build\MicroBuild.Core.targets" Condition="Exists('$(PkgMicroBuild_Core)\build\MicroBuild.Core.targets')" />
   <Import Project="..\..\build\DropFiles.targets" />
   <!-- Force the project to be an exe before the compile step. This is used by CoreCLR builds. -->
   <Target Name="BeforeBuild">

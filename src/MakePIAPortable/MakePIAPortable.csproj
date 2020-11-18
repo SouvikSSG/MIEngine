@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\build\miengine.settings.targets" />
-  <Import Project="$(PkgMicroBuild_Core)\build\MicroBuild.Core.props" Condition="Exists('$(PkgMicroBuild_Core)\build\MicroBuild.Core.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Desktop.Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -37,6 +36,7 @@
   <ItemGroup Label="NuGet Packages">
     <PackageReference Include="Microsoft.VisualStudio.Debugger.Interop.Portable" Version="$(Microsoft_VisualStudio_Debugger_Interop_Portable_Version)" />
     <PackageReference Include="Microsoft.VisualStudio.Debugger.Interop.15.0" Version="$(Microsoft_VisualStudio_Debugger_Interop_15_0_Version)" />
+    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="$(Microsoft_VisualStudioEng_MicroBuild_Core_Version)" />
   </ItemGroup>
 
   <ItemGroup Label="References">
@@ -84,6 +84,5 @@
     </None>
   </ItemGroup>
   <Import Project="..\..\build\miengine.targets" />
-  <Import Project="$(PkgMicroBuild_Core)\build\MicroBuild.Core.targets" Condition="Exists('$(PkgMicroBuild_Core)\build\MicroBuild.Core.targets')" />
   <Import Project="..\..\build\DropFiles.targets" />
 </Project>
