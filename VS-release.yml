@@ -34,8 +34,8 @@ jobs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Release'
 
-   - task: PublishPipelineArtifact@1
-     displayName: 'Publish Binaries'
-     inputs:
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Binaries'
+    inputs:
       targetPath: '$(Build.BinariesDirectory)' 
       artifactName: 'bin'
