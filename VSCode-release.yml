@@ -16,17 +16,14 @@ jobs:
       feedsToUse: 'config'
       nugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
 
-  - task: VSBuild@1
-    displayName: 'Build Solution **\*.sln'
+  - task: MSBuild@1
     inputs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
-      msbuildArgs: '/p:Lab=$(Lab) /v:diag'
-      platform: 'Any CPU'
       configuration: 'Desktop.Release'
-      clean: true
+      msbuildArguments: '/p:Lab=$(Lab)'
 
   - task: PublishPipelineArtifact@1
     displayName: 'Publish Binaries'
     inputs:
       targetPath: '$(Build.BinariesDirectory)' 
-      artifactName: # 'bin'
+      artifactName: 'bin'
