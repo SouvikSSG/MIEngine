@@ -27,11 +27,20 @@ jobs:
       solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       configuration: 'Release'
 
+  # Create drop folder
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(Build.SourcesDirectory)\drop'
+    inputs:
+      SourceFolder: '$(Build.BinariesDirectory)'
+      TargetFolder: '$(Build.SourcesDirectory)\drop'
+      CleanTargetFolder: true
+      OverWrite: true
+
   - task: PublishPipelineArtifact@1
     displayName: 'Publish Binaries'
     inputs:
-      targetPath: '$(Build.BinariesDirectory)' 
-      artifactName: 'binaries'
+      targetPath: '$(Build.SourcesDirectory)\drop'
+      artifactName: 'drop'
 
   # Collect and Publish Symbols
   - task: CopyFiles@2
@@ -57,7 +66,7 @@ jobs:
       configuration: Release
       versioningScheme: byEnvVar
       versionEnvVar: 'BUILD_BUILDNUMBER'
-      basePath: '$(Build.BinariesDirectory)'
+      basePath: '$(Build.SourcesDirectory)'
 
   # Publish VS.Redist.Debugger.MDD.MIEngine and VS.Redist.Debugger.MDD.UnixPortSupplier
   - task: NuGetCommand@2
