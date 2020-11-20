@@ -1,0 +1,24 @@
+# Pack and Publish NuGet Packages for VS
+# Creates:
+#    - VS.Redist.Debugger.MDD.MIEngine
+#    - VS.Redist.Debugger.MDD.UnixPortSupplier
+---
+steps:
+- template: ../tasks/NuGetCommand.yml
+  parameters:
+    displayName: 'NuGet pack'
+    command: pack
+    packagesToPack: '$(Build.SourcesDirectory)\MIEngine.mdd.nuspec;$(Build.SourcesDirectory)\MIEngine.UnixPortSupplier.nuspec'
+    configuration: Release
+    versioningScheme: byEnvVar
+    versionEnvVar: 'BUILD_BUILDNUMBER'
+    basePath: '$(Build.SourcesDirectory)'
+
+- template: ../tasks/NuGetCommand.yml
+  parameters:
+    displayName: 'NuGet push'
+    command: push
+    packagesToPush: '$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.MIEngine.*.nupkg;$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.UnixPortSupplier.*.nupkg'
+    publishVstsFeed: 'https://devdiv.pkgs.visualstudio.com/DefaultCollection/_packaging/VS/nuget/v3/index.json'
+    enabled: false
+...

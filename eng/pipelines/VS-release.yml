@@ -4,8 +4,7 @@ jobs:
   pool:
     name: VSEng-MicroBuildVS2019
   steps:
-  - task: NuGetToolInstaller@1
-    displayName: 'Use NuGet'
+  - template: ./tasks/NuGetToolInstall.yml
 
   - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@2
     displayName: 'Install Signing Plugin'
@@ -15,64 +14,16 @@ jobs:
   - task: ms-vseng.MicroBuildTasks.a0262b21-fb8f-46f8-bb9a-60ed560d4a87.MicroBuildLocalizationPlugin@2
     displayName: 'Install Localization Plugin'
 
-  - task: NuGetCommand@2
-    inputs:
-      command: 'restore'
-      restoreSolution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
-      feedsToUse: 'config'
-      nugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
+  - template: ./steps/BuildSolution.yml
 
-  - task: MSBuild@1
-    inputs:
-      solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
-      configuration: 'Release'
+  - template: ./steps/CollectAndPublishBinaries.yml
+    parameters:
+      TargetFolder: '$(Build.StagingDirectory)\drop'
+      ArtifactName: 'drop'
 
-  # Create drop folder
-  - task: CopyFiles@2
-    displayName: 'Copy Files to: $(Build.SourcesDirectory)\drop'
-    inputs:
-      SourceFolder: '$(Build.BinariesDirectory)'
-      TargetFolder: '$(Build.SourcesDirectory)\drop'
-      CleanTargetFolder: true
-      OverWrite: true
+  - template: ./steps/CopyAndPublishSymbols.yml
 
-  - task: PublishPipelineArtifact@1
-    displayName: 'Publish Binaries'
-    inputs:
-      targetPath: '$(Build.SourcesDirectory)\drop'
-      artifactName: 'drop'
+  - template: ./steps/PackAndPublishVSPackages.yml
 
-  # Collect and Publish Symbols
-  - task: CopyFiles@2
-    displayName: 'Collect build symbols'
-    inputs:
-      SourceFolder: '$(Build.SourcesDirectory)'
-      Contents: '$(Build.SourcesDirectory)\bin\**\*.+(pdb|exe|dll)'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)/symbols'
-      CleanTargetFolder: true
-
-  - task: PublishPipelineArtifact@1
-    displayName: 'Publish Symbols'
-    inputs:
-      targetPath: '$(Build.ArtifactStagingDirectory)/symbols' 
-      artifactName: 'Symbols'
-
-  # Create .nupkg for VS.Redist.Debugger.MDD.MIEngine and VS.Redist.Debugger.MDD.UnixPortSupplier
-  - task: NuGetCommand@2
-    displayName: 'NuGet pack'
-    inputs:
-      command: pack
-      packagesToPack: '$(Build.SourcesDirectory)\MIEngine.mdd.nuspec;$(Build.SourcesDirectory)\MIEngine.UnixPortSupplier.nuspec'
-      configuration: Release
-      versioningScheme: byEnvVar
-      versionEnvVar: 'BUILD_BUILDNUMBER'
-      basePath: '$(Build.SourcesDirectory)'
-
-  # Publish VS.Redist.Debugger.MDD.MIEngine and VS.Redist.Debugger.MDD.UnixPortSupplier
-  - task: NuGetCommand@2
-    displayName: 'NuGet push'
-    inputs:
-      command: push
-      packagesToPush: '$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.MIEngine.*.nupkg;$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.UnixPortSupplier.*.nupkg'
-      publishVstsFeed: 'https://devdiv.pkgs.visualstudio.com/DefaultCollection/_packaging/VS/nuget/v3/index.json'
-    enabled: false # TODO: enable
+  - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
+    displayName: 'Perform Cleanup Tasks'
