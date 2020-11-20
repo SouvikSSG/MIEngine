@@ -51,7 +51,7 @@ parameters:
   # 
   # Credentials to use for external registries located in the selected NuGet.config. For feeds in this organization/collection,
   # leave this blank; the build’s credentials are used automatically.
-  externalEndpoints : "undefined" # Used when selectOrConfig = config
+  externalEndpoints : "" # Used when selectOrConfig = config
   
   # endregion
   
