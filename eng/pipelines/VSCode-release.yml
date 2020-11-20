@@ -4,7 +4,7 @@ jobs:
   pool:
     name: VSEng-MicroBuildVS2019
   steps:
-  - template: ./tasks/NuGetToolInstall.yml
+  - template: ./tasks/NuGetToolInstaller.yml
 
   - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@2
     displayName: 'Install Signing Plugin'
