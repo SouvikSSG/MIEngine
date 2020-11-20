@@ -60,7 +60,6 @@ jobs:
       basePath: '$(Build.BinariesDirectory)'
 
   # Publish VS.Redist.Debugger.MDD.MIEngine and VS.Redist.Debugger.MDD.UnixPortSupplier
-  steps:
   - task: NuGetCommand@2
     displayName: 'NuGet push'
     inputs:
