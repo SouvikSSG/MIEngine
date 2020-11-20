@@ -4,6 +4,9 @@ jobs:
   pool:
     name: VSEng-MicroBuildVS2019
   steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'Use NuGet'
+
   - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@2
     displayName: 'Install Signing Plugin'
     inputs:
@@ -12,22 +15,12 @@ jobs:
   - task: ms-vseng.MicroBuildTasks.a0262b21-fb8f-46f8-bb9a-60ed560d4a87.MicroBuildLocalizationPlugin@2
     displayName: 'Install Localization Plugin'
 
-  - task: NuGetInstaller@0
-    displayName: 'NuGet restore src/MIDebugEngine.sln'
-    inputs:
-      solution: src/MIDebugEngine.sln
-      nuGetPath: '$(Build.SourcesDirectory)\tools\NuGet\nuget.exe'
-
   - task: NuGetCommand@2
     inputs:
       command: 'restore'
+      restoreSolution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       feedsToUse: 'config'
       nugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
-
-  - task: MSBuild@1
-    inputs:
-      solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
-      configuration: 'Debug'
 
   - task: MSBuild@1
     inputs:
@@ -38,4 +31,40 @@ jobs:
     displayName: 'Publish Binaries'
     inputs:
       targetPath: '$(Build.BinariesDirectory)' 
-      artifactName: 'bin'
+      artifactName: 'binaries'
+
+  # Collect and Publish Symbols
+  - task: CopyFiles@2
+    displayName: 'Collect build symbols'
+    inputs:
+      SourceFolder: '$(Build.SourcesDirectory)'
+      Contents: '$(Build.SourcesDirectory)\bin\**\*.+(pdb|exe|dll)'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/symbols'
+      CleanTargetFolder: true
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Symbols'
+    inputs:
+      targetPath: '$(Build.ArtifactStagingDirectory)/symbols' 
+      artifactName: 'Symbols'
+
+  # Create .nupkg for VS.Redist.Debugger.MDD.MIEngine and VS.Redist.Debugger.MDD.UnixPortSupplier
+  - task: NuGetCommand@2
+    displayName: 'NuGet pack'
+    inputs:
+      command: pack
+      packagesToPack: '$(Build.SourcesDirectory)\MIEngine.mdd.nuspec;$(Build.SourcesDirectory)\MIEngine.UnixPortSupplier.nuspec'
+      configuration: Release
+      versioningScheme: byEnvVar
+      versionEnvVar: 'BUILD_BUILDNUMBER'
+      basePath: '$(Build.BinariesDirectory)'
+
+  # Publish VS.Redist.Debugger.MDD.MIEngine and VS.Redist.Debugger.MDD.UnixPortSupplier
+  steps:
+  - task: NuGetCommand@2
+    displayName: 'NuGet push'
+    inputs:
+      command: push
+      packagesToPush: '$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.MIEngine.*.nupkg;$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.UnixPortSupplier.*.nupkg'
+      publishVstsFeed: 'https://devdiv.pkgs.visualstudio.com/DefaultCollection/_packaging/VS/nuget/v3/index.json'
+    enabled: false # TODO: enable
