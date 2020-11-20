@@ -14,7 +14,7 @@ steps:
     NugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
 
 - template: ../tasks/MSBuild.yml
-  inputs:
+  parameters:
     solution: ${{ parameters.Solution }}
     configuration: ${{ parameters.Configuration }}
     msbuildArguments: ${{ parameters.BuildArguments }}
