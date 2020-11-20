@@ -4,20 +4,18 @@ jobs:
   pool:
     name: VSEng-MicroBuildVS2019
   steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'Use NuGet'
+
   - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@2
     displayName: 'Install Signing Plugin'
     inputs:
       signType: test
 
-  - task: NuGetInstaller@0
-    displayName: 'NuGet restore src/MIDebugEngine.sln'
-    inputs:
-      solution: src/MIDebugEngine.sln
-      nuGetPath: '$(Build.SourcesDirectory)\tools\NuGet\nuget.exe'
-
   - task: NuGetCommand@2
     inputs:
       command: 'restore'
+      restoreSolution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
       feedsToUse: 'config'
       nugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
 
@@ -32,3 +30,18 @@ jobs:
     inputs:
       targetPath: '$(Build.BinariesDirectory)' 
       artifactName: 'bin'
+
+  # Collect and Publish Symbols
+  - task: CopyFiles@2
+    displayName: 'Collect build symbols'
+    inputs:
+      SourceFolder: '$(Build.SourcesDirectory)'
+      Contents: '$(Build.SourcesDirectory)\bin\**\*.+(pdb|exe|dll)'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/symbols'
+      CleanTargetFolder: true
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Symbols'
+    inputs:
+      targetPath: '$(Build.ArtifactStagingDirectory)/symbols' 
+      artifactName: 'Symbols'
