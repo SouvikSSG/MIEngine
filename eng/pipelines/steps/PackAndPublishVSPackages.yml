@@ -8,8 +8,8 @@ steps:
   parameters:
     displayName: 'NuGet pack'
     command: pack
-    packagesToPack: '$(Build.SourcesDirectory)\MIEngine.mdd.nuspec;$(Build.SourcesDirectory)\MIEngine.UnixPortSupplier.nuspec'
-    configuration: Release
+    searchPatternPack: '$(Build.SourcesDirectory)\MIEngine.mdd.nuspec;$(Build.SourcesDirectory)\MIEngine.UnixPortSupplier.nuspec'
+    configurationToPack: Release
     versioningScheme: byEnvVar
     versionEnvVar: 'BUILD_BUILDNUMBER'
     basePath: '$(Build.SourcesDirectory)'
@@ -18,7 +18,7 @@ steps:
   parameters:
     displayName: 'NuGet push'
     command: push
-    packagesToPush: '$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.MIEngine.*.nupkg;$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.UnixPortSupplier.*.nupkg'
-    publishVstsFeed: 'https://devdiv.pkgs.visualstudio.com/DefaultCollection/_packaging/VS/nuget/v3/index.json'
+    searchPatternPush: '$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.MIEngine.*.nupkg;$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.UnixPortSupplier.*.nupkg'
+    feedPublish: 'https://devdiv.pkgs.visualstudio.com/DefaultCollection/_packaging/VS/nuget/v3/index.json'
     condition: and(succeeded(), eq(variables['SignType'], 'real'))
 ...
