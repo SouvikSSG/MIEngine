@@ -1,3 +1,4 @@
+---
 parameters:
   JobName: 'VSEng-MicroBuildVS2019'
   BuildTemplate: ''
@@ -8,3 +9,4 @@ jobs:
     name: VSEng-MicroBuildVS2019
   steps:
   - template: ../templates/${{ parameters.BuildTemplate }}.template.yml
+...

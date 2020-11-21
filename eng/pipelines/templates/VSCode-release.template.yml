@@ -1,3 +1,4 @@
+---
 steps:
 - checkout: self
 
@@ -18,3 +19,4 @@ steps:
 - template: ../steps/CopyAndPublishSymbols.yml
 
 - template: ../tasks/MicroBuildCleanup.yml
+...

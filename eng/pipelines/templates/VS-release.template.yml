@@ -1,3 +1,4 @@
+---
 steps:
 - checkout: self
 
@@ -17,5 +18,8 @@ steps:
 - template: ../steps/CopyAndPublishSymbols.yml
 
 - template: ../steps/PackAndPublishVSPackages.yml
+  parameters:
+    BasePath: $(Build.StagingDirectory)
 
 - template: ../tasks/MicroBuildCleanup.yml
+...

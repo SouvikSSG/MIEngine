@@ -3,6 +3,9 @@
 #    - VS.Redist.Debugger.MDD.MIEngine
 #    - VS.Redist.Debugger.MDD.UnixPortSupplier
 ---
+parameters:
+  BasePath: $(Build.StagingDirectory)
+
 steps:
 - template: ../tasks/NuGetCommand.yml
   parameters:
@@ -12,7 +15,7 @@ steps:
     configurationToPack: Release
     versioningScheme: byEnvVar
     versionEnvVar: 'BUILD_BUILDNUMBER'
-    basePath: '$(Build.SourcesDirectory)'
+    basePath: ${{ parameters.BasePath }}
 
 - template: ../tasks/NuGetCommand.yml
   parameters:
