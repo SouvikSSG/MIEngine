@@ -1,7 +1,7 @@
 # Restore and Build Solution
 ---
 parameters:
-  Solution: $(Build.SourcesDirectory)\src\MIDebugEngine.sln'
+  Solution: '$(Build.SourcesDirectory)\src\MIDebugEngine.sln'
   Configuration: 'Release'
   BuildArguments: ''
 
