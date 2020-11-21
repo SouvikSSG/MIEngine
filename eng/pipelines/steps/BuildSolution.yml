@@ -9,7 +9,7 @@ steps:
 - template: ../tasks/NuGetCommand.yml
   parameters:
     Command: 'restore'
-    RestoreSolution: ${{ parameters.Solution }}
+    solution: ${{ parameters.Solution }}
     FeedsToUse: 'config'
     NugetConfigPath: '$(Build.SourcesDirectory)\src\.nuget\NuGet.config'
 
