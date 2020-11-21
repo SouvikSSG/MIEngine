@@ -20,5 +20,5 @@ steps:
     command: push
     packagesToPush: '$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.MIEngine.*.nupkg;$(Build.SourcesDirectory)\VS.Redist.Debugger.MDD.UnixPortSupplier.*.nupkg'
     publishVstsFeed: 'https://devdiv.pkgs.visualstudio.com/DefaultCollection/_packaging/VS/nuget/v3/index.json'
-    enabled: false
+    condition: and(succeeded(), eq(variables['SignType'], 'real'))
 ...

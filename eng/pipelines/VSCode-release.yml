@@ -4,12 +4,11 @@ jobs:
   pool:
     name: VSEng-MicroBuildVS2019
   steps:
+  - checkout: self
+
   - template: ./tasks/NuGetToolInstaller.yml
 
-  - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@2
-    displayName: 'Install Signing Plugin'
-    inputs:
-      signType: test
+  -template: ./tasks/MicroBuildSigningPlugin.yml
 
   - template: ./steps/BuildSolution.yml
     parameters:
@@ -22,6 +21,5 @@ jobs:
       ArtifactName: 'bin'
 
   - template: ./steps/CopyAndPublishSymbols.yml
-  
-  - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
-    displayName: 'Perform Cleanup Tasks'
+
+  - template: ./tasks/MicroBuildCleanup.yml
