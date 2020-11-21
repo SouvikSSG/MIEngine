@@ -1,26 +1,6 @@
 name: $(Date:yyyMMdd).$(Rev:r)
 jobs:
-- job: VS_Release
-  pool:
-    name: VSEng-MicroBuildVS2019
-  steps:
-  - checkout: self
-
-  - template: ./tasks/NuGetToolInstaller.yml
-
-  - template: ./tasks/MicroBuildSigningPlugin.yml
-
-  - template: ./tasks/MicroBuildLocalizationPlugin.yml
-
-  - template: ./steps/BuildSolution.yml
-
-  - template: ./steps/CollectAndPublishBinaries.yml
-    parameters:
-      TargetFolder: '$(Build.StagingDirectory)\drop'
-      ArtifactName: 'drop'
-
-  - template: ./steps/CopyAndPublishSymbols.yml
-
-  - template: ./steps/PackAndPublishVSPackages.yml
-
-  - template: ./tasks/MicroBuildCleanup.yml
+- template: ./jobs/VSEng-MicroBuildVS2019.yml
+  parameters:
+    JobName: VS_Release
+    BuildTemplate: 'VS-release'
